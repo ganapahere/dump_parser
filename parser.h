@@ -9,16 +9,18 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
-#define NUM_PDE	1024
-#define PD_SIZE (4 * NUM_PDE)
+#define NUM_PDE		1024
+#define PDE_SIZE	4
+#define PDIR_SIZE	(PDE_SIZE * NUM_PDE)
+#define KERN_PDE_START	768
 #define PDE_FLAG_MASK	0x0000FFFF
-#define PDE_FLAG_SIG	0x000001E3
-#define VALID_PDE_THRESHOLD	256
+#define KERN_PDE_SIG	0x000001E3
+#define KERN_PDE_THR	256
 
 typedef struct pdir {
 	unsigned int pdir_addr;
 	unsigned int pde_match;
-	unsigned char *pde_ptr;
+	unsigned int *pde_ptr;
 } pdir_t;
 
 unsigned int get_active_process_count(char *path_mem_dump);
