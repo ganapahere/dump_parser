@@ -52,13 +52,21 @@ static void fill_valid_pde_count(pdir_t *p_pdir)
 		if ((p_pdir->pde_ptr[i] & PDE_FLAG_MASK) == KERN_PDE_SIG) {
 			p_pdir->pde_match++;
 		}
+		if (p_pdir->pde_ptr[i] == 0) {
+			p_pdir->zero_match++;
+		}
 	}
 
 }
 
 static bool is_valid_pdir(pdir_t *p_pdir)
 {
-	if (p_pdir->pde_match >= KERN_PDE_THR) {
+#if DEBUG_ENABLE
+	if (p_pdir->pde_match > 0) {
+		printf("%d, %d\n", p_pdir->pde_match, p_pdir->zero_match);
+	}
+#endif
+	if (p_pdir->pde_match >= KERN_PDE_THR && p_pdir->zero_match > 0) {
 		return true;
 	}
 

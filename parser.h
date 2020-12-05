@@ -15,11 +15,12 @@
 #define KERN_PDE_START	768
 #define PDE_FLAG_MASK	0x0000FFFF
 #define KERN_PDE_SIG	0x000001E3
-#define KERN_PDE_THR	256
+#define KERN_PDE_THR	219
 
 typedef struct pdir {
 	unsigned int pdir_addr;
 	unsigned int pde_match;
+	unsigned int zero_match;
 	unsigned int *pde_ptr;
 } pdir_t;
 
